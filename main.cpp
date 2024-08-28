@@ -1,40 +1,55 @@
 #include <iostream>
-#include <fstream>
+#include <string>
+
+class Player {
+    private:
+
+    public:
+};
 
 class Table {
     private:
-        
+        int table[13][26] =  {
+            {1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {3,4,4,4, 11 ,4,4,4,3,4,4,4, 12 ,4,4,4,3,4,4,4, 13 ,4,4,4,3},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {3,4,4,4, 14 ,4,4,4,3,4,4,4, 15 ,4,4,4,3,4,4,4, 16 ,4,4,4,3},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {3,4,4,4, 17 ,4,4,4,3,4,4,4, 18 ,4,4,4,3,4,4,4, 19 ,4,4,4,3},
+            {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
+            {1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1}
+        };
     public:
+    void verifyTable() {
+        for (int i = 0; i < 13; ++i) {
+        for (int j = 0; j < 26; ++j) {
+            if (table[i][j] == 1) std::cout << "+";
+            else if (table[i][j] == 2) std::cout << "-";
+            else if (table[i][j] == 3) std::cout << "|";
+            else std::cout << " ";
+        }
+        if (i == 12) 
+            continue; 
+        std::cout << std::endl;
+    }
+    }
 
 };
 
+class Game {
+    private:
+
+    public:
+};
+
 int main() {
-    // Open the table file
-    std::ifstream tableFile("table.txt");
-
-    // Check if the table file is successfully opened
-    if (!tableFile.is_open()) {
-        std::cout << "Failed to open the file" << "\n";
-        return 1;
-    }
-
-    // Max char count of a line
-    const size_t MAX_LINE_LENGHT = 25; // size_t: unsignet integer type used for indexing
-
-    // Create a char array for reading a line
-    char line[MAX_LINE_LENGHT + 1];
-
-    std::cout << "Content of the file" << "\n";
-
-    int lineChecker = 0;
-    int rowChecker = 0;
-
-    while (tableFile.getline(line, sizeof(line))) {
-        for (int i = 0; i < (sizeof(line) / sizeof(char)); i++) {
-            
-        }
-    }
-
+    Table table;
+    table.verifyTable();
 
     return 0;
 }

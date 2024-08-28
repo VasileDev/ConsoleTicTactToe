@@ -1,0 +1,1 @@
+Created a table.txt file. It will contain the table's blueprint.
