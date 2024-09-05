@@ -13,10 +13,7 @@ class Player {
         std::string getName() { return playerName; }
 
         void setTurn(bool turn) { playerTurn = turn; }
-
-        void makeMove(int playableSpot) {            
-        
-        }
+        bool getTurn() { return playerTurn; }
 };
 
 class Table {
@@ -36,27 +33,46 @@ class Table {
             {3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,3},
             {1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1}
         };
+        int remainingChoices[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9}; 
     public:
-    void displayTable() {
-        for (int i = 0; i < 13; ++i) {
-            for (int j = 0; j < 26; ++j) {
-                if (table[i][j] == 1) std::cout << "+";
-                else if (table[i][j] == 2) std::cout << "-";
-                else if (table[i][j] == 3) std::cout << "|";
-                else std::cout << " ";
-            }
+        void displayTable() {
+            for (int i = 0; i < 13; ++i) {
+                for (int j = 0; j < 26; ++j) {
+                    if (table[i][j] == 1) std::cout << "+";
+                    else if (table[i][j] == 2) std::cout << "-";
+                    else if (table[i][j] == 3) std::cout << "|";
+                    else if (table[i][j] == 5) std::cout << "X";
+                    else if (table[i][j] == 6) std::cout << "0";
+                    else std::cout << " ";
+                }
 
-            if (i == 12)
-                continue;
-            std::cout << std::endl;
+                if (i == 12)
+                    continue;
+                std::cout << std::endl;
+            }
         }
-    }
+
+        int* getremainingChoices() {
+            return remainingChoices;
+        }
+
+        void setRemainingChoices(int arr[9]) {
+            for (int i = 0; i < 9; i++) {
+                remainingChoices[i] = arr[i];
+            }
+        }
+
+        // Will remove a number from remainingChoices when a player makes a move
+        void removeOption(int chosenNumber) {
+
+        }
 };
 
 class Game {
     private:
         Player player1;
         Player player2;
+        Table table;
     public:
         Game() : player1('x', true), player2('0', true) {}
 
@@ -93,15 +109,53 @@ class Game {
             } 
         }
 
+        void switchTurns() {
+            player1.setTurn(!player1.getTurn());
+            player2.setTurn(!player2.getTurn());
+        }
+
+        void makeMove(char mark) {
+            
+        }
+
+        void playGame() {
+            bool running = true;
+            while (running) {
+                std::cout << "Choose a number: ";
+                int* remainingChoices = table.getremainingChoices();
+                for (int i = 0; i < 9; i++) {
+                    std::cout << *(remainingChoices + i) << " ";
+                }
+                int choice;
+                // If the player inputs another things
+                while (true) {
+                    std::cin >> choice;
+                    if (choice < 1 || choice > 9) {
+                        std::cout << "Please input a number from 1-10." << "\n";
+                    } else {
+                        break;
+                    }
+                }
+                if (player1.getTurn() == true) {
+                    makeMove('X');
+                    switchTurns();
+                    table.removeOption(choice);
+                } else {
+                    makeMove('0');
+                    switchTurns();
+                    table.removeOption(choice);
+                }
+            }
+        }
+
         void startGame() {  
             setNames();
             chooseStarter();
+            playGame();
         }
 };
 
 int main() {
-    Table table;
-    table.displayTable();
     Game game;
     game.startGame();
 
